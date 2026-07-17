@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>3D Viewer</title>
+    <style>
+        body { margin: 0; padding: 20px; background: #1a1a1a; }
+        model-viewer { width: 100%; height: 80vh; }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .back-btn:hover { background: #106ebe; }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="history.back()">← Back to Gallery</button>
+    
+    <model-viewer 
+        id="viewer"
+        ar 
+        ar-modes="webxr scene-viewer quick-look" 
+        camera-controls 
+        shadow-intensity="1"
+        poster=""
+    >
+        <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+        <button slot="ar-button" id="ar-button">View in your space</button>
+    </model-viewer>
+
+    <script type="module" src="https://unpkg.com/@google/model-viewer@2.0.0/dist/model-viewer.min.js"></script>
+    <script>
+        // Парсим параметры URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const modelPath = urlParams.get('model');
+        const posterPath = urlParams.get('poster') || '';
+
+        // Загружаем модель
+        const viewer = document.getElementById('viewer');
+        if (modelPath) {
+            viewer.src = modelPath;
+            viewer.poster = posterPath;
+            console.log('Loading model:', modelPath);
+        }
+
+        // Прогресс-бар
+        viewer.addEventListener('progress', (event) => {
+            const progressBar = viewer.querySelector('.progress-bar');
+            const updateBar = viewer.querySelector('.update-bar');
+            if (updateBar) {
+                updateBar.style.width = `${event.detail.totalProgress * 100}%`;
+            }
+            if (event.detail.totalProgress === 1) {
+                progressBar?.classList.add('hide');
+            } else {
+                progressBar?.classList.remove('hide');
+            }
+        });
+    </script>
+</body>
+</html>
