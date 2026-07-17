@@ -1,0 +1,107 @@
+<html>
+<head> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">   
+  <title>Tiled 3D Library Gallery</title>
+  <link type="text/css" href="styles.css" rel="stylesheet"/>
+  <style type="text/css">
+	#wrap {
+      overflow: hidden; 
+	   margin: 20px;
+    }
+	.tile{
+	width: 300px;
+	height: 250px;
+	padding-bottom: 5%;
+	color: #123;
+	position: relative;
+	float: left;
+	background: #e9e9e9;
+	text-align: center;
+	}
+	.boxInner {
+	position: absolute;
+	left: 20px;
+	//right: 40px;
+	//top: 10px;
+	//bottom: 10px;
+	//overflow: hidden;
+	width: 260px;
+	height: 260px;
+	background: #ffffff;
+	object-fit: scale-down;
+	text-align: center;
+	box-shadow: 0 5px 10px rgba(0,0,0,0.2), 0 5px 20px rgba(0,0,0,0.17);
+	//box-shadow: 0 15px 25px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.20);
+	}
+</style>
+</head>
+
+
+<body> 
+	<div id="wrap">
+	</div>
+
+<script>
+	var v_DB;
+	function csvToArray(str, delimiter = ",") {
+      const headers = str.slice(0, str.indexOf("\r")).split(delimiter);
+      const rows = str.slice(str.indexOf("\n") + 1).split(/\r?\n/);
+      // Map the rows
+      // split values from each row into an array
+      // use headers.reduce to create an object
+      // object properties derived from headers:values
+      // the object passed as an element of the array
+      const arr = rows.map(function (row) {
+        const values = row.split(delimiter);
+        const el = headers.reduce(function (object, header, index) {
+          object[header] = values[index];
+          return object;
+        }, {});
+        return el;
+      });
+      return arr;
+    }
+	function loadFile(url){
+		var res = new XMLHttpRequest();
+		res.open("GET", url, false);
+		res.send(null);
+		//console.log(res.responseText);
+		return res.responseText;
+	}
+	function create_redirect(i){
+		let A;
+		let B;
+		let C;
+		A = v_DB[i].Title;
+		B = v_DB[i].Adres;
+		//C = B.replace(/"/g, '');
+		let ret;
+		//ret = '<a href="viewer_tab.html?adres=' + B + '&adres2=' + A + '.png" target="_blank"><img src="Poster/' + A + '.png"/></a>';
+		ret = '<a href="viewer_tab.html?adres=' + B + '&adres2=' + A + '.png" target="_blank"><img src="Poster/' + A + '.png"/></a></br><p>' + A + '</p>';
+		console.log(ret);
+		return ret;
+	}
+	
+	var text = loadFile('m_list.txt');
+	console.log(text);
+	//v_DB = JSON.parse(text);
+	v_DB = csvToArray(text);
+	console.log(v_DB);
+	console.log(v_DB.length);
+	for (let i = 0; i <= v_DB.length-1 ; i++) {
+	let div = document.createElement('div');
+	div.className = 'tile';
+	let div2 = document.createElement('div');
+	div2.className = 'boxInner';
+	div2.innerHTML = create_redirect(i);
+	div.appendChild(div2);
+	//document.body.appendChild(div);
+	document.querySelector('#wrap').appendChild(div);
+	}
+
+</script>
+</body> 
+</html>
+
+

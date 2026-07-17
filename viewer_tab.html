@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>&lt;model-viewer&gt; template</title>
+    <meta charset="utf-8">
+    <meta name="description" content="&lt;model-viewer&gt; template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" href="styles.css" rel="stylesheet"/>
+    <!-- OPTIONAL: The :focus-visible polyfill removes the focus ring for some input types -->
+    <script src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js" defer></script>
+	<script>
+	//file:///D:/Docs/Html/web_3d_viewer/index_link.html?adres=thin_step_triple_component44.glb
+	//console.log(window.location.search);
+	//console.log(window.location.search.substring(1));
+		var sPageURL = window.location.search.substring(1);
+      const urlParams = new URLSearchParams(sPageURL);
+      var adres = urlParams.get('adres');
+	  var adres_p = urlParams.get('adres_p');
+	  console.log(adres);
+	  </script>
+	  
+	<script type="text/javascript" >
+	
+	document.addEventListener("DOMContentLoaded", function(){
+		//console.log(adres);
+		var img = document.getElementById("myId2"); 
+		img.setAttribute("src", adres);
+		img.setAttribute("poster", adres_p);
+		//var img =document.querySelector("myId2");
+		//img.src = adres;
+		
+});
+		//document.getElementById("myId").setAttribute("src", adres);
+		//console.log(document.getElementById("myId").getAttribute('src'));
+		// adres = 'src="thin step triple component44.glb"'; reveal="manual"
+		
+  </script>
+  </head>
+  <body>
+  <div id="myId">3</div>
+    <!-- <model-viewer> HTML element -->
+     <model-viewer  ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp" shadow-intensity="1" id="myId2" >
+	 <div class="progress-bar hide" slot="progress-bar">
+	 <div class="update-bar">
+	 </div></div>
+	 <button slot="ar-button" id="ar-button">View in your space</button>
+	 <div id="ar-prompt"><img src="ar_hand_prompt.png">
+	 </div>
+	 </model-viewer>
+    <script src="script.js"></script>
+    <!-- Loads <model-viewer> for browsers: -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer@2.1.1/dist/model-viewer.min.js"></script> 
+
+<!--	
+	<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@^0.167.1/build/three.module.min.js"
+  }
+}
+</script>
+	<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer-module.min.js"></script>
+	<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects/dist/model-viewer-effects.min.js"></script>
+-->
+	
+  </body>
+</html>
+<!--
+https://stackoverflow.com/questions/807878/how-to-make-javascript-execute-after-page-load
+he common ways to run Javascript after page load are:
+
+    Add an event listener – document.addEventListener("load", FUNCTION);
+    Add onload to the body tag – <body onload="FUNCTION()">
+    Defer the script – <script src="SCRIPT.js" defer>
+    Lastly, place the script at the very bottom of the page – Although this is not quite “after page load”. 
+	https://stackoverflow.com/questions/807878/how-to-make-javascript-execute-after-page-load
+	
+	-->
