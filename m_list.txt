@@ -1,3 +1,4 @@
 Title,Adres
 AES03DSpeed_1200,Models/AES03DSpeed_1200$$$.glb
 AES03_XL,Models/AES03_XL$$$.glb
+OP-110,Models/ABB_OP110$$$.glb
